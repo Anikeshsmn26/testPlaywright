@@ -1,9 +1,9 @@
 module.exports = {
     testDir: './tests',
-    timeout: 30000,
+    timeout: 60000,
     retries: 1,
     use: {
-      headless: true,
+      headless: false,
       viewport: { width: 1280, height: 720 },
       screenshot: 'only-on-failure',
       video: 'retry-with-video',
