@@ -9,4 +9,8 @@ module.exports = {
       video: 'retry-with-video',
       trace: 'on-first-retry',
     },
+    reporter: [
+      ['list'],
+      ['html', {  outputFile: 'playwright-report', open:'never' }]
+    ]
   };
