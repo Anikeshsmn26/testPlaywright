@@ -1,9 +1,7 @@
 pipeline {
-    agent {
-        docker {
-            image 'test-playwright' // The Docker image we built earlier
-            args '-u root'          // Run as root to avoid permission issues
-        }
+     agent {
+        label 'docker' // Make sure the agent has Docker installed
+    }
     }
 
     environment {
@@ -13,13 +11,12 @@ pipeline {
     stages {
         stage('Install dependencies') {
             steps {
-                sh 'npm install'    // Install project dependencies
+                  sh 'npx playwright install --with-deps'    // Install project dependencies
             }
         }
 
         stage('Run Playwright Tests') {
             steps {
-                sh 'npx playwright install --with-deps' // Install Playwright browsers
                 sh 'npx playwright test'                // Run Playwright tests
             }
         }
