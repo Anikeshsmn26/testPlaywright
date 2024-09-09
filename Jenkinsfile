@@ -1,10 +1,7 @@
 pipeline {
-     agent {
-        label 'docker' // Make sure the agent has Docker installed
-    }
-    }
-
-    environment {
+     agent any
+     
+        environment {
         // If needed, you can add environment variables here
     }
 
