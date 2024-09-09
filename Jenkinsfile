@@ -1,36 +1,53 @@
 pipeline {
-     agent any
-     
-        environment {
-        // If needed, you can add environment variables here
+    agent any
+
+    environment {
+        // Optional: specify environment variables if needed
+        // For example, if you need to set NODE_ENV to production:
+        // NODE_ENV = 'production'
     }
 
     stages {
-        stage('Install dependencies') {
+        stage('Install Node.js & Playwright Dependencies') {
             steps {
-                  sh 'npx playwright install --with-deps'    // Install project dependencies
+                // Ensure Node.js is installed and available in the PATH
+                script {
+                    // If Node.js is not installed, you can install it here
+                    sh 'node --version || echo "Node.js is not installed!"'
+                }
+
+                // Install Node.js dependencies using npm or yarn
+                sh 'npm install'  // Ensure that package.json exists in your repo
+                
+                // Install Playwright browsers
+                sh 'npx playwright install --with-deps'
             }
         }
 
         stage('Run Playwright Tests') {
             steps {
-                sh 'npx playwright test'                // Run Playwright tests
+                // Run Playwright tests
+                sh 'npx playwright test'
             }
         }
 
         stage('Archive Test Results') {
             steps {
-                archiveArtifacts artifacts: 'test-results/**/*.png, test-results/**/*.json', allowEmptyArchive: true
+                // Archive any test result files (screenshots, videos, JSON files, etc.)
+                archiveArtifacts artifacts: 'test-results/**/*', allowEmptyArchive: true
             }
         }
     }
 
     post {
         always {
-            junit 'test-results/**/*.xml'   // Publish test results in JUnit format
+            // Optionally publish JUnit-style test results if you are generating XML reports
+            junit 'test-results/**/*.xml'
         }
+
         cleanup {
-            cleanWs()  // Clean up workspace after the job
+            // Clean up the workspace after the job finishes
+            cleanWs()
         }
     }
 }
