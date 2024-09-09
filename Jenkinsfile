@@ -1,10 +1,9 @@
 pipeline {
     agent any
-
+    
     environment {
-        // Optional: specify environment variables if needed
-        // For example, if you need to set NODE_ENV to production:
-        // NODE_ENV = 'production'
+        NODE_ENV = 'production'
+        // Add other environment variables here if required
     }
 
     stages {
