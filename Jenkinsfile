@@ -1,11 +1,6 @@
 pipeline {
     agent any
     
-    environment {
-        NODE_ENV = 'production'
-        // Add other environment variables here if required
-    }
-
     stages {
         stage('Install Node.js & Playwright Dependencies') {
             steps {
